@@ -1,8 +1,8 @@
-print("hello")
-
 hashmap = {}
 hashmap[canada] = 0
 
-def apple:
+def pear(true):
     print("apple")
     print("app")
+
+print(0)
