@@ -1,5 +1,13 @@
 {
   "expo": {
+    "plugins": [
+      [
+        "expo-location",
+        {
+          "locationWhenInUsePermission": "Allow PinPoint to use your location."
+        }
+      ]
+    ],
     "name": "PinPointApp",
     "slug": "PinPointApp",
     "version": "1.0.0",
