@@ -1,10 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button} from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput} from 'react-native';
 import { useState, useEffect } from 'react';
 import * as Location from 'expo-location';
 
 export default function App() {
   const [location, setLocation] = useState(); //location held in state variable for easier updating
+  const [address, setAddress] = useState();
 
   //function to obtain location permission
   useEffect(() => {
@@ -27,9 +28,19 @@ export default function App() {
 
   }, []);
 
+  const geocode = async () => {
+    const obtainedGeocode = await Location.geocodeAsync(address);
+    console.log("Geocode Address:");
+    console.log(obtainedGeocode);
+  }
+
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+      <Text>Address</Text> 
+      
+      <TextInput placeholder='Address' value = {address} onChangeText={setAddress}></TextInput>
+      <Button title = "Geocode" onPress={geocode} />
+
       <StatusBar style="auto" />
     </View>
   );
