@@ -34,12 +34,25 @@ export default function App() {
     console.log(obtainedGeocode);
   }
 
+  const reverseGeocode = async () => {
+    const reverseObtainedLocation = await Location.reverseGeocodeAsync({
+      longitude: location.coords.longitude,
+      latitude: location.coords.latitude
+    });
+
+    console.log("Reverse Geocode Address:");
+    console.log(reverseObtainedLocation);
+
+  }
+
   return (
     <View style={styles.container}>
       <Text>Address</Text> 
       
       <TextInput placeholder='Address' value = {address} onChangeText={setAddress}></TextInput>
       <Button title = "Geocode" onPress={geocode} />
+
+      <Button title = "Reverse Geocode Current Location" onPress={reverseGeocode} />
 
       <StatusBar style="auto" />
     </View>
