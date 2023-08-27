@@ -2,11 +2,18 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button, TextInput} from 'react-native';
 import React, { useState, useEffect } from 'react';
 import * as Location from 'expo-location';
-import MapView from 'react-native-maps';
+import MapView, {Marker} from 'react-native-maps';
 
 export default function App() {
   const [location, setLocation] = useState(); //location held in state variable for easier updating
   const [address, setAddress] = useState();
+  
+  const [mapRegion, setMapRegion] = useState({
+    longitude: 37.788825,
+    latitude: -122.4324,
+    longitudeDelta: 0.0922,
+    latitudeDelat: 0.0421,
+  });//map - random location
 
   //function to obtain location permission
   useEffect(() => {
@@ -23,7 +30,14 @@ export default function App() {
       setLocation(currentLocation);
       console.log("Location:");
       console.log(currentLocation);
-    }
+
+      setMapRegion({
+        longitude: location.coords.longitude,
+        latitude: location.coords.latitude,
+        longitudeDelta: 0.0922,
+        latitudeDelat: 0.0421,
+      });//map sets current location
+    };
 
     locationRequest(); 
 
@@ -57,7 +71,12 @@ export default function App() {
 
       <StatusBar style="auto" />
 
-      <MapView style={styles.map} />
+      <MapView style={styles.map} 
+        region={mapRegion}
+      >
+        <Marker coordinate={mapRegion} title='Marker' />
+      </MapView>
+      
     </View>
   );
 }
