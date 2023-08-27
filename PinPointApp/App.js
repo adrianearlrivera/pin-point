@@ -1,7 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button, TextInput} from 'react-native';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import * as Location from 'expo-location';
+import MapView from 'react-native-maps';
 
 export default function App() {
   const [location, setLocation] = useState(); //location held in state variable for easier updating
@@ -22,7 +23,7 @@ export default function App() {
       setLocation(currentLocation);
       console.log("Location:");
       console.log(currentLocation);
-    };
+    }
 
     locationRequest(); 
 
@@ -45,7 +46,7 @@ export default function App() {
 
   }
 
-  return (
+  return ( // visual section of app
     <View style={styles.container}>
       <Text>Address</Text> 
       
@@ -55,6 +56,8 @@ export default function App() {
       <Button title = "Reverse Geocode Current Location" onPress={reverseGeocode} />
 
       <StatusBar style="auto" />
+
+      <MapView style={styles.map} />
     </View>
   );
 }
@@ -65,5 +68,9 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  map: {
+    width: '50%',
+    height: '50%',
   },
 });
