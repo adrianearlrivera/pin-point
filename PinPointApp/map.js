@@ -14,24 +14,11 @@ function show_map() {
 
     setMapRegion({
         longitude: location.coords.longitude,
-        latitude: location.coords.latitude,
-        longitudeDelta: 0.0922,
-        latitudeDelat: 0.0421,
+        latitude: location.coords.latitude,       
       });//map sets current location
-      
-    return ( // visual section of app
-    <View style={styles.container}>
-      <Text>Map</Text> 
-      
-      <MapView style={styles.map} 
-        region={mapRegio}
-      >
-        <Marker coordinate={mapRegio} title='Marker' />
-      </MapView>
-      
-    </View>
-  );
 }
+
+export default ( mapRegion );
 
 function current_location() {
     //gets precise current geo-location
@@ -51,18 +38,3 @@ function display_path(start, end) {
 const map_zoom = () => {
     //set default zoom level
 }
-
-
-//testing purposes - can add to actual css file later
-const styles = StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    map: {
-      width: '50%',
-      height: '50%',
-    },
-  });

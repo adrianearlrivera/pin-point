@@ -4,6 +4,8 @@ import React, { useState, useEffect } from 'react';
 import * as Location from 'expo-location';
 import MapView, {Marker} from 'react-native-maps';
 
+import mapRegion from './map';
+
 export default function App() {
   const [location, setLocation] = useState(); //location held in state variable for easier updating
   const [address, setAddress] = useState();
@@ -20,7 +22,7 @@ export default function App() {
     const locationRequest = async () => {
       let {status} = await Location.requestForegroundPermissionsAsync();
       ///Asks the user to grant permissions for location while the app is in the foreground.
-      if (status !== 'granted') {
+      if (status != 'granted') {
         console.log("Location permission required to use app!");
         return;
       }
