@@ -1,21 +1,21 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button, TextInput} from 'react-native';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import * as Location from 'expo-location';
 import MapView, {Marker} from 'react-native-maps';
 
-import mapRegion from './map';
-
 export default function App() {
+  const defaultRegion = ({
+    longitude: 37.788825,
+    latitude: -122.4324,
+    latitudeDelta: 0.0922,
+    longitudeDelta: 0.0421,
+  });
+
   const [location, setLocation] = useState(); //location held in state variable for easier updating
   const [address, setAddress] = useState();
   
-  const [mapRegion, setMapRegion] = useState({
-    longitude: 37.788825,
-    latitude: -122.4324,
-    longitudeDelta: 0.0922,
-    latitudeDelat: 0.0421,
-  });//map - random location
+  const [mapRegion, setMapRegion] = useState(defaultRegion);
 
   //function to obtain location permission
   useEffect(() => {
@@ -34,10 +34,10 @@ export default function App() {
       console.log(currentLocation);
 
       setMapRegion({
-        longitude: location.coords.longitude,
-        latitude: location.coords.latitude,
-        longitudeDelta: 0.0922,
-        latitudeDelat: 0.0421,
+        longitude: currentLocation.coords.longitude,
+        latitude: currentLocation.coords.latitude,
+        latitudeDelta: 0.05,
+        longitudeDelta: 0.05
       });//map sets current location
     };
 
@@ -61,6 +61,9 @@ export default function App() {
     console.log(reverseObtainedLocation);
 
   }
+  
+  //reference for map function interaction - zoom feature
+  const mapViewRef = useRef(null);
 
   return ( // visual section of app
     <View style={styles.container}>
@@ -74,8 +77,19 @@ export default function App() {
       <StatusBar style="auto" />
 
       <MapView style={styles.map} 
-        region={mapRegion}
-      >
+        region={defaultRegion}
+
+        //map zoom in on current location feature
+        ref={mapViewRef}
+        onLongPress={() =>
+          mapViewRef.current?.animateToRegion(mapRegion,2000)
+        }
+
+        //onUserLocationChange={} - could use maybe
+        showsUserLocation={true}
+        followUserLocation={true}
+        
+            >
         <Marker coordinate={mapRegion} title='Marker' />
       </MapView>
       
@@ -91,7 +105,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   map: {
-    width: '50%',
-    height: '50%',
+    width: '75%',
+    height: '75%',
   },
 });
