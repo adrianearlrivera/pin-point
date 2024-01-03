@@ -3,8 +3,11 @@ import { StyleSheet, Text, View, Button, TextInput} from 'react-native';
 import React, { useState, useEffect, useRef } from 'react';
 import * as Location from 'expo-location';
 import MapView, {Marker} from 'react-native-maps';
+import MapViewDirections from "react-native-maps-directions";
 
 export default function App() {
+  const GOOGLE_MAPS_APIKEY = "UNKWONS";
+
   const defaultRegion = ({
     longitude: 37.788825,
     latitude: -122.4324,
@@ -16,6 +19,11 @@ export default function App() {
   const [address, setAddress] = useState();
   
   const [mapRegion, setMapRegion] = useState(defaultRegion);
+  const [coordsLocation, setCoords] = useState();
+  const [destination, setDestination] = useState({
+    longitude: -5.930120,
+    latitude: 54.597286,
+  });
 
   //function to obtain location permission
   useEffect(() => {
@@ -29,16 +37,30 @@ export default function App() {
 
       //permission granted
       let currentLocation = await Location.getCurrentPositionAsync({});
-      setLocation(currentLocation);
       console.log("Location:");
       console.log(currentLocation);
+      setLocation(currentLocation);
+
+      setCoords({
+        longitude: currentLocation.coords.longitude,
+        latitude: currentLocation.coords.latitude,
+        });
+      console.log(coordsLocation);
+      
 
       setMapRegion({
         longitude: currentLocation.coords.longitude,
         latitude: currentLocation.coords.latitude,
         latitudeDelta: 0.05,
-        longitudeDelta: 0.05
+        longitudeDelta: 0.05,
       });//map sets current location
+
+      setDestination({
+        longitude: -5.930120,
+        latitude: 54.597286,
+      });
+      
+      console.log(destination);
     };
 
     locationRequest(); 
@@ -89,8 +111,16 @@ export default function App() {
         showsUserLocation={true}
         followUserLocation={true}
         
-            >
-        <Marker coordinate={mapRegion} title='Marker' />
+      >
+        {/* Path to marker */}
+        {/* <MapViewDirections
+          origin={coordsLocation}
+          destination={destination}
+          apikey={GOOGLE_MAPS_APIKEY}
+        /> */}
+
+        <Marker coordinate={destination} title='Marker' />
+
       </MapView>
       
     </View>
