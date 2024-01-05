@@ -6,7 +6,7 @@ import MapView, {Marker} from 'react-native-maps';
 import MapViewDirections from "react-native-maps-directions";
 
 export default function App() {
-  const GOOGLE_MAPS_APIKEY = "UNKWONS";
+  const GOOGLE_MAPS_APIKEY = "AIzaSyDdhscbQGoxIJoi5l9neOF3ef2jKt3w0bw";
 
   const defaultRegion = ({
     longitude: 37.788825,
@@ -113,11 +113,29 @@ export default function App() {
         
       >
         {/* Path to marker */}
-        {/* <MapViewDirections
+        <MapViewDirections
           origin={coordsLocation}
           destination={destination}
           apikey={GOOGLE_MAPS_APIKEY}
-        /> */}
+
+          strokeColor='red'
+          strokeWidth={5}
+
+          onReady={result => {
+              console.log(`Distance: ${result.distance} km`)
+              console.log(`Duration: ${result.duration} min.`)
+
+              //map zoom in on both origin and destination coordinate
+              mapViewRef.current?.fitToCoordinates(result.coordinates, {
+                edgePadding: {
+                  right: 20,
+                  bottom: 20,
+                  left: 20,
+                  top: 20,
+                }
+              });
+            }}
+        />
 
         <Marker coordinate={destination} title='Marker' />
 
