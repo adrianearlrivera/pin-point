@@ -6,7 +6,7 @@ import MapView, {Marker} from 'react-native-maps';
 import MapViewDirections from "react-native-maps-directions";
 
 export default function App() {
-  const GOOGLE_MAPS_APIKEY = "AIzaSyDdhscbQGoxIJoi5l9neOF3ef2jKt3w0bw";
+  const GOOGLE_MAPS_APIKEY = "";
 
   const defaultRegion = ({
     longitude: 37.788825,
